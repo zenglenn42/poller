@@ -5,7 +5,7 @@ Like setInterval(cb, msec) but observable and safer since it requires cb complet
 
 ## Motivation
 
-I'd like to implement an network status checker that periodically polls the internet for
+I'd like to implement a network status checker that periodically polls the internet for
 the existence of a known file.
 
 I liked [this approach](https://gist.github.com/gitdagray/f310be81be217750fc9d2b233e2ae70c#gistcomment-3819167),
