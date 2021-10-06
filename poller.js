@@ -11,9 +11,10 @@
 // observable by invoking the addObserver method with an object that defines
 // an update() method.
 //----------------------------------------------------------------------------------
-function Poller(callback = () => {}, msec = 1000) {
-  this.msec = msec
+function Poller(callback = () => {}, msec = 1000, count = Number.POSITIVE_INFINITY) {
+  this.msec = Math.abs(msec)
   this.callback = callback
+  this.count = (count >= 0) ? count : Number.POSITIVE_INFINITY  // max polling iterations
   this.state = 'stopped'
   this.observers = new ObserverList()
 
@@ -69,6 +70,16 @@ Poller.prototype.cb = function() {
     this.setState('stopped')
     this._timeoutId = undefined
   } else {
+    if (this.count !== Number.POSITIVE_INFINITY){
+      this.count = this.count - 1
+
+      // Stop if we've reached the iteration limit.
+      if (this.count < 0) {
+        this.setState('stopped')
+        this._abort = true
+        return
+      }
+    }
     this.poll()
     this.setState('polling')
     this.callback()
@@ -76,14 +87,16 @@ Poller.prototype.cb = function() {
 }
 
 Poller.prototype.start = function() {
-  if (this._timeoutId) {
-    return // Already polling.
-  } else {
-    this._abort = false
-  }
+  if (this.count > 0) {
+    if (this._timeoutId) {
+      return // already polling.
+    } else {
+      this._abort = false
+    }
 
-  this.setState('starting')
-  this.poll()
+    this.setState('starting')
+    this.poll()
+  }
 }
 
 Poller.prototype.stop = function() {
