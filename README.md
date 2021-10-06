@@ -14,12 +14,12 @@ but want to add the ability to start and stop polling.
 So this is just a fancy wrapper for setTimeout() which captures the timeout id so we can
 clear it to stop the polling behavior.
 
-I've also observability semantics to the poller based upon some inspiration from Addy Osmani's cool book,
+I've also added observability semantics to the poller based upon inspiration from Addy Osmani's cool book,
 Learning JavaScript Design Patterns.
 
 When the start button is clicked, the poller's state looks like this:
 
-```stopped`` --> ```starting``` --> ```polling``` 
+```stopped``` --> ```starting``` --> ```polling``` 
 
 Once in polling mode, the poller invokes the payload callback periodically until the poller is stopped.
 
@@ -28,7 +28,7 @@ prevents long-running callbacks that take longer than the configured interval fr
 
 When the stop button is clicked, poller state becomes:
 
-```polling`` --> ```stopping``` --> ```stopped``` 
+```polling``` --> ```stopping``` --> ```stopped``` 
 
 Here's a snippet from ```index.html``` like if you're too lazy to click the github link :D
 
