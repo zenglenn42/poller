@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>PollNet</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="./observer-list.js"></script>
+    <script type="text/javascript" src="./poller.js"></script>
+    <script type="text/javascript" src="./view.js"></script>
+    <div id="container">
+      <header>
+        Polling Study
+      </header>
+      <main>
+        <div id="button-row">
+          <button id="start-button">start</button>
+          <button id="stop-button">stop</button>
+        </div>
+        <div id="status">Status</div>
+      </main>
+      <footer>
+        Incremental Industries &copy; 2021
+      </footer>
+    </div>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function(event) {
+
+        // Create a view object that defines an update() method.
+
+        let divId = "status"
+        let view = new View(divId)
+
+        // Instantiate a poller object with callback and max frequency interval.
+
+        let msec = 2000
+        let callback = () => { console.log('test callback called') }
+        let poller = new Poller(callback, msec)
+
+        // Register the view as an observer of the poller's state.
+
+        poller.addObserver(view)
+
+        // Enable buttons to control the poller.
+
+        let startButtonEl = document.getElementById("start-button")
+        startButtonEl.addEventListener('click', poller.start.bind(poller))
+
+        let stopButtonEl = document.getElementById("stop-button")
+        stopButtonEl.addEventListener('click', poller.stop.bind(poller))
+
+      });
+    </script>
+  </body>
+</html>
