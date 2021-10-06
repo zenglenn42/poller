@@ -30,7 +30,7 @@ When the stop button is clicked, poller state becomes:
 
 ```polling``` --> ```stopping``` --> ```stopped``` 
 
-Here's a snippet from ```index.html``` like if you're too lazy to click the github link :D
+Here's a snippet from ```index.html``` if you're too lazy to click the github file link :D
 
 ```
   <body>
